@@ -13,22 +13,49 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Avatar from '@mui/material/Avatar';
-
-function createData(
-  name,
-  calories,
-  fat,
-  carbs,
-  protein,
-) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [];
+import Link from '@mui/material/Link';
+import { ButtonGroup } from '@mui/material';
 
 
 export default function Users() {
   const [Items, setItems] = useState([]);
+
+  /* เริ่ม fuction ลบข้อมูล*/
+  const DeleteUser = (id) =>{
+
+    /* แบบใช้ fetch */
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    
+    var raw = JSON.stringify({
+      "id": id
+    });
+
+    var requestOptions = {
+      method: 'DELETE',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    fetch("https://www.melivecode.com/api/users/delete", requestOptions)
+      .then((response) => { return response.json()})
+      .then(result => {
+        console.log(result)
+        alert(result['message']);
+      })
+      .catch(error => console.log('error', error));
+
+    /* แบบใช้ axios แต่ยังไม่สำเร็จแบบ fetch ด้านบน
+    axios.delete('https://www.melivecode.com/api/users/delete',{id:id})
+    .then(()=>{
+      alert("Delete user successfully");
+    })
+     สิ้นสุด fuction ลบข้อมูล axios  */
+
+  }//จบ function deleteUser
+   
   axios.get('https://www.melivecode.com/api/users').then((response)=>{
     setItems(response.data);
   });
@@ -44,21 +71,22 @@ export default function Users() {
             Users
           </Typography>
           </Box>
-          <Box> 
-            <Button variant="contained">Create</Button>
+          <Box>
+            <Link href="http://localhost:3000/create"> 
+              <Button variant="contained">Create</Button>
+            </Link>
           </Box>
           </Box>
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>ID</TableCell>
+                  <TableCell align="center">ID</TableCell>
+                  <TableCell align="center">Avatar</TableCell>
+                  <TableCell align="center">First Name</TableCell>
+                  <TableCell align="center">Last Name</TableCell>
+                  <TableCell align="center">username</TableCell>
                   <TableCell align="center">Action</TableCell>
-                  <TableCell align="right">First Name</TableCell>
-                  <TableCell align="right">Last Name</TableCell>
-                  <TableCell align="right">username</TableCell>
-                  <TableCell align="right">Avatar</TableCell>
-                  
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -70,14 +98,18 @@ export default function Users() {
                     <TableCell component="th" scope="row">
                       {row.id}
                     </TableCell>
-                    <TableCell align="right">
+                    <TableCell align="center">
                       <Avatar alt={row.username} src={row.avatar} />
                     </TableCell>
-                    <TableCell align="right">{row.fname}</TableCell>
-                    <TableCell align="right">{row.lname}</TableCell>
-                    <TableCell align="right">{row.username}</TableCell>
-                    <TableCell align="right">{row.avatar}</TableCell>
-                    <TableCell align="right"></TableCell>
+                    <TableCell align="center">{row.fname}</TableCell>
+                    <TableCell align="center">{row.lname}</TableCell>
+                    <TableCell align="center">{row.username}</TableCell>
+                    <TableCell align="center">
+                      <ButtonGroup variant="outlined" aria-label="outlined button group">
+                        <Button>Edit</Button>
+                        <Button onClick={()=>{DeleteUser(row.id)}}>del</Button>
+                      </ButtonGroup>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
