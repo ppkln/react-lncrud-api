@@ -3,6 +3,7 @@ import './App.css';
 import Navbar from './Navbar.js';
 import Users from './Users.js';
 import InsertUser from './InsertUser';
+import UserUpdate from './UserUpdate';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Users></Users>}></Route>
           <Route path='create' element={<InsertUser></InsertUser>}></Route>
+          <Route path='updateuser/:id' element={<UserUpdate></UserUpdate>}></Route>
         </Routes>
     </div>
   );

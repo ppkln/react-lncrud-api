@@ -15,6 +15,7 @@ import TableRow from '@mui/material/TableRow';
 import Avatar from '@mui/material/Avatar';
 import Link from '@mui/material/Link';
 import { ButtonGroup } from '@mui/material';
+import UserUpdate from './UserUpdate';
 
 
 export default function Users() {
@@ -26,7 +27,6 @@ export default function Users() {
     /* แบบใช้ fetch */
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-
     
     var raw = JSON.stringify({
       "id": id
@@ -55,7 +55,12 @@ export default function Users() {
      สิ้นสุด fuction ลบข้อมูล axios  */
 
   }//จบ function deleteUser
-   
+
+  //เริ่ม function UserEdit
+  const UserEdit = (id) =>{
+    window.location = '/updateuser/'+id;
+  }//จบ function UserEdit
+
   axios.get('https://www.melivecode.com/api/users').then((response)=>{
     setItems(response.data);
   });
@@ -106,7 +111,7 @@ export default function Users() {
                     <TableCell align="center">{row.username}</TableCell>
                     <TableCell align="center">
                       <ButtonGroup variant="outlined" aria-label="outlined button group">
-                        <Button>Edit</Button>
+                        <Button onClick={()=>{UserEdit(row.id)}}>Edit</Button>
                         <Button onClick={()=>{DeleteUser(row.id)}}>del</Button>
                       </ButtonGroup>
                     </TableCell>
