@@ -19,6 +19,10 @@ import { ButtonGroup } from '@mui/material';
 
 export default function Users() {
   const [Items, setItems] = useState([]);
+  //ดึงข้อมูล user จาก api เพื่อมาแสดงที่หน้าเว็บ
+  axios.get('https://www.melivecode.com/api/users').then((response)=>{ 
+    setItems(response.data);
+});
 
   /* เริ่ม fuction ลบข้อมูล*/
   const DeleteUser = (id) =>{
@@ -52,10 +56,6 @@ export default function Users() {
   const UserEdit = (id) =>{
     window.location = '/updateuser/'+id;
   }//จบ function UserEdit
-
-  axios.get('https://www.melivecode.com/api/users').then((response)=>{
-    setItems(response.data);
-  });
 
   return (
     <React.Fragment>

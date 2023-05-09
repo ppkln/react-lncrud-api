@@ -1,18 +1,29 @@
 import React from 'react';
+import Navbar from './Navbar.js';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter,Routes,Route } from "react-router-dom";
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Users from './Users.js';
+import InsertUser from './InsertUser';
+import UserUpdate from './UserUpdate';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
-);
+  <div className="container mt-3 mb-3 border1">
+      <h1 className='text-center'><a href='http://localhost:3000'>Welcome to LN world </a></h1>
+      <img src='http://localhost:3000/public/gi_image/logo-nueng1.png' alt=''></img>
+        <hr></hr>
+        <Navbar></Navbar>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<Users></Users>}></Route>
+            <Route path='create' element={<InsertUser></InsertUser>}></Route>
+            <Route path='updateuser/:id' element={<UserUpdate></UserUpdate>}></Route>
+          </Routes>
+        </BrowserRouter>
+  </div>
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+  
+);
 reportWebVitals();
