@@ -15,7 +15,6 @@ import TableRow from '@mui/material/TableRow';
 import Avatar from '@mui/material/Avatar';
 import Link from '@mui/material/Link';
 import { ButtonGroup } from '@mui/material';
-import UserUpdate from './UserUpdate';
 
 
 export default function Users() {
@@ -27,18 +26,18 @@ export default function Users() {
     /* แบบใช้ fetch */
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    
+     
     var raw = JSON.stringify({
       "id": id
     });
-
+    
     var requestOptions = {
       method: 'DELETE',
       headers: myHeaders,
       body: raw,
       redirect: 'follow'
     };
-
+   
     fetch("https://www.melivecode.com/api/users/delete", requestOptions)
       .then((response) => { return response.json()})
       .then(result => {
@@ -46,14 +45,7 @@ export default function Users() {
         alert(result['message']);
       })
       .catch(error => console.log('error', error));
-
-    /* แบบใช้ axios แต่ยังไม่สำเร็จแบบ fetch ด้านบน
-    axios.delete('https://www.melivecode.com/api/users/delete',{id:id})
-    .then(()=>{
-      alert("Delete user successfully");
-    })
-     สิ้นสุด fuction ลบข้อมูล axios  */
-
+      
   }//จบ function deleteUser
 
   //เริ่ม function UserEdit
